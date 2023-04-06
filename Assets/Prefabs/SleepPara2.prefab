@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -754154353536037816}
   m_Layer: 0
   m_Name: SleepPara2
-  m_TagString: Demon
+  m_TagString: nightmare
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

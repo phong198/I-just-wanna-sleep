@@ -9,9 +9,16 @@ public class Player : MonoBehaviour
     public float jumpForce = 8f;
     public float gravity = 9.81f * 2f;
 
+    private int lives = 3;
+
     private void Awake()
     {
         character = GetComponent<CharacterController>();
+        int isBoughtLive = PlayerPrefs.GetInt("isBoughtLive", 0);
+        if (isBoughtLive == 1)
+        {
+            lives = 4;
+        }
     }
 
     private void OnEnable()
@@ -21,9 +28,10 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log("lives: " + lives);
         direction += Vector3.down * gravity * Time.deltaTime;
 
-        if (character.isGrounded)
+        if (!GameManager.Instance.isPaused && character.isGrounded)
         {
             direction = Vector3.down;
 
@@ -40,15 +48,20 @@ public class Player : MonoBehaviour
         switch (other.gameObject.tag)
         {
             case "Demon":
-                Debug.Log("Demon");
+                --lives;
+                if (lives == 0)
+                {
+                    GameManager.Instance.GameOver();
+                }
                 break;
             case "nightmare":
-                Debug.Log("nightmare");
+                GameManager.Instance.AddTime();
                 break;
             case "star":
-                Debug.Log("star");
+                GameManager.Instance.AddScore();
                 break;
         }
+        Destroy(other.gameObject);
     }
 
 }

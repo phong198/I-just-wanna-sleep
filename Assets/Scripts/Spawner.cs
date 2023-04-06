@@ -31,7 +31,7 @@ public class Spawner : MonoBehaviour
 
         foreach (var obj in objects)
         {
-            if (spawnChance < obj.spawnChance)
+            if (!GameManager.Instance.isPaused && spawnChance < obj.spawnChance)
             {
                 GameObject obstacle = Instantiate(obj.prefab);
                 obstacle.transform.position += transform.position;

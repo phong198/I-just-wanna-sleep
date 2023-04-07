@@ -4,6 +4,7 @@ using UnityEngine;
 public class Ground : MonoBehaviour
 {
     public MeshRenderer meshRenderer;
+    public float speed;
 
     private void Awake()
     {
@@ -12,8 +13,11 @@ public class Ground : MonoBehaviour
 
     private void Update()
     {
-        float speed = GameManager.Instance.gameSpeed / transform.localScale.x;
-        meshRenderer.material.mainTextureOffset += Vector2.right * speed * Time.deltaTime;
+        if (GameManager.Instance.enabled && !GameManager.Instance.isPaused)
+        {
+            //float speed = 0.05f; //GameManager.Instance.gameSpeed / transform.localScale.x;
+            meshRenderer.material.mainTextureOffset += Vector2.right * speed * Time.deltaTime;
+        }    
     }
 
 }

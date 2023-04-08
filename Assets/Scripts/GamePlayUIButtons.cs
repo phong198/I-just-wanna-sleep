@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class GamePlayUIButtons : MonoBehaviour
 {
@@ -26,11 +27,13 @@ public class GamePlayUIButtons : MonoBehaviour
 
     public void PressReload()
     {
+        DOTween.Clear(true);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); 
     }    
 
     public void PressHome()
     {
+        DOTween.Clear(true);
         SceneManager.LoadScene("MainMenu");
     }
 }

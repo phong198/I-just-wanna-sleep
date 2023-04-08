@@ -1,4 +1,5 @@
 using UnityEngine;
+using DG.Tweening;
 
 [RequireComponent(typeof(CharacterController))]
 public class Player : MonoBehaviour
@@ -13,6 +14,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        gameObject.transform.DOMoveX(-6, 3);
         character = GetComponent<CharacterController>();
         int isBoughtLive = PlayerPrefs.GetInt("isBoughtLive", 0);
         if (isBoughtLive == 1)
@@ -28,7 +30,6 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("lives: " + lives);
         direction += Vector3.down * gravity * Time.deltaTime;
 
         if (!GameManager.Instance.isPaused && character.isGrounded)

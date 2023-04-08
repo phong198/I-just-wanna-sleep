@@ -33,7 +33,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        PlayerPrefs.SetFloat("hiscore", 0);
+        //PlayerPrefs.SetFloat("hiscore", 0);
+        //PlayerPrefs.SetInt("score", 5000);
 
         if (Instance != null) {
             DestroyImmediate(gameObject);
@@ -76,7 +77,18 @@ public class GameManager : MonoBehaviour
         spawner.gameObject.SetActive(true);
 
         UpdateHiscore();
+
+        livesImages[3].gameObject.SetActive(false);
+        if (PlayerPrefs.GetInt("isBoughtLive", 0) == 1)
+        {
+            livesImages[3].gameObject.SetActive(true);
+        }    
     }
+
+    public void ReduceLives(int lives)
+    {
+        livesImages[lives].gameObject.SetActive(false);
+    }    
 
     public void GamePause()
     {

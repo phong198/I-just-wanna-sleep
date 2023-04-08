@@ -2907,10 +2907,10 @@ MonoBehaviour:
   clockMinute: 0
   timeText: {fileID: 16140537}
   livesImages:
-  - {fileID: 131562538}
   - {fileID: 799845647}
   - {fileID: 75302337}
   - {fileID: 914248313}
+  - {fileID: 131562538}
   scoreText: {fileID: 1903372495}
   gameOverScreen: {fileID: 469759096}
   timesUpScreen: {fileID: 1631881344}
@@ -3410,7 +3410,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 203, y: 288}
+  m_AnchoredPosition: {x: 146, y: 288}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1747531404

@@ -49,6 +49,7 @@ public class Player : MonoBehaviour
         {
             case "Demon":
                 --lives;
+                GameManager.Instance.ReduceLives(lives);
                 if (lives == 0)
                 {
                     GameManager.Instance.GameOver();

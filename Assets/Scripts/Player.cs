@@ -57,11 +57,23 @@ public class Player : MonoBehaviour
                 }
                 break;
             case "nightmare":
-                GameManager.Instance.AddTime();
+                if(PlayerPrefs.GetString("day", "Monday") == "Saturday" || PlayerPrefs.GetString("day", "Monday") == "Sunday")
+                {
+                    GameManager.Instance.MinusTime();
+                }
+                 else GameManager.Instance.AddTime();
                 break;
             case "star":
                 GameManager.Instance.AddScore();
                 break;
+            case "mom":
+                if (PlayerPrefs.GetString("day", "Monday") == "Saturday" || PlayerPrefs.GetString("day", "Monday") == "Sunday")
+                {
+                    GameManager.Instance.GameOver();
+                }
+                else
+                    GameManager.Instance.YouWin();
+                    break;
         }
         Destroy(other.gameObject);
     }

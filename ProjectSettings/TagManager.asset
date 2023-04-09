@@ -8,6 +8,7 @@ TagManager:
   - Obstacle
   - nightmare
   - star
+  - mom
   layers:
   - Default
   - TransparentFX

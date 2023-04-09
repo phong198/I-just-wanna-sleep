@@ -1,4 +1,6 @@
 using UnityEngine;
+using System;
+using System.Collections.Generic;
 
 public class Spawner : MonoBehaviour
 {
@@ -10,14 +12,21 @@ public class Spawner : MonoBehaviour
         public float spawnChance;
     }
 
-    public SpawnableObject[] objects;
+    public List<SpawnableObject> objects = new List<SpawnableObject>();
+
+    public SpawnableObject mom;
 
     public float minSpawnRate = 1f;
     public float maxSpawnRate = 2f;
 
     private void OnEnable()
     {
-        Invoke(nameof(Spawn), Random.Range(minSpawnRate, maxSpawnRate));
+        if (PlayerPrefs.GetString("day", "Monday") == "Saturday" || PlayerPrefs.GetString("day", "Monday") == "Sunday")
+        {
+            objects.Add(mom);
+        }
+            
+        Invoke(nameof(Spawn), UnityEngine.Random.Range(minSpawnRate, maxSpawnRate));
     }
 
     private void OnDisable()
@@ -27,7 +36,7 @@ public class Spawner : MonoBehaviour
 
     private void Spawn()
     {
-        float spawnChance = Random.value;
+        float spawnChance = UnityEngine.Random.value;
 
         foreach (var obj in objects)
         {
@@ -41,7 +50,7 @@ public class Spawner : MonoBehaviour
             spawnChance -= obj.spawnChance;
         }
 
-        Invoke(nameof(Spawn), Random.Range(minSpawnRate, maxSpawnRate));
+        Invoke(nameof(Spawn), UnityEngine.Random.Range(minSpawnRate, maxSpawnRate));
     }
 
 }

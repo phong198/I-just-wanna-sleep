@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,14 +17,19 @@ public class GameManager : MonoBehaviour
     public int clockHour = 0;
     public int clockMinute = 0;
 
+    public TMP_Text dayText;
     public TMP_Text timeText;
     public Image[] livesImages;
+    public GameObject timeBuff;
     public TMP_Text scoreText;
     public GameObject gameOverScreen;
     public GameObject timesUpScreen;
 
     public TMP_Text gameOverScores;
     public TMP_Text timesUpScores;
+
+    public AudioSource dailyMusic;
+    public AudioSource weekendMusic;
 
     private Player player;
     private Spawner spawner;
@@ -33,9 +39,6 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        //PlayerPrefs.SetFloat("hiscore", 0);
-        //PlayerPrefs.SetInt("score", 5000);
-
         if (Instance != null) {
             DestroyImmediate(gameObject);
         } else {
@@ -82,7 +85,26 @@ public class GameManager : MonoBehaviour
         if (PlayerPrefs.GetInt("isBoughtLive", 0) == 1)
         {
             livesImages[3].gameObject.SetActive(true);
-        }    
+        }
+
+        if (PlayerPrefs.GetInt("isBoughtTime", 0) == 1)
+        {
+            timeBuff.SetActive(true);
+            if (PlayerPrefs.GetString("day", "Monday") == "Saturday" || PlayerPrefs.GetString("day", "Monday") == "Sunday")
+            {
+                ReduceTime();
+            }
+            else AddTime();
+        }
+
+        if (PlayerPrefs.GetString("day", "Monday") == "Saturday" || PlayerPrefs.GetString("day", "Monday") == "Sunday")
+        {
+            weekendMusic.Play(0);
+        }
+        else dailyMusic.Play(0);
+
+        dayText.SetText(PlayerPrefs.GetString("day", "Monday"));
+        dayText.DOFade(0, 3).SetDelay(3);
     }
 
     public void ReduceLives(int lives)
@@ -131,6 +153,12 @@ public class GameManager : MonoBehaviour
         timesUpScreen.SetActive(true);
         ClearBuffs();
         timesUpScores.SetText("Total scores: " + PlayerPrefs.GetInt("score", 0) + "\n" + "High score: " + PlayerPrefs.GetFloat("hiscore", 0));
+
+        int daysUnlocked = PlayerPrefs.GetInt("daysUnlocked", 0);
+        if (daysUnlocked < 7)
+        {
+            PlayerPrefs.SetInt("daysUnlocked", daysUnlocked + 1);
+        }
     }
 
     private void UpdateTotalScore()
@@ -143,6 +171,11 @@ public class GameManager : MonoBehaviour
     public void AddTime()
     {
         timer += 15;  
+    }
+
+    public void ReduceTime()
+    {
+        timer -= 30;
     }
 
     public void AddScore()
@@ -163,8 +196,13 @@ public class GameManager : MonoBehaviour
         {
             timer += Time.deltaTime * clockSpeed;
             gameSpeed += gameSpeedIncrease * Time.deltaTime;
-        }    
-        clockMinute = Mathf.FloorToInt(timer);
+        }
+        if (timer > 0)
+        {
+            clockMinute = Mathf.FloorToInt(timer);
+        }
+        else clockMinute = 0;
+
         if (timer > 60f)
         {
             ++clockHour;

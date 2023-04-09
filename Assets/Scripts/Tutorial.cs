@@ -98,7 +98,14 @@ public class Tutorial : MonoBehaviour
         {
             nextTut.SetActive(true);
         }
-        else tutEndMenu.SetActive(true);
+        else
+        {
+            tutEndMenu.SetActive(true);
+            if (PlayerPrefs.GetInt("daysUnlocked", 0) == 0)
+            {
+                PlayerPrefs.SetInt("daysUnlocked", 1);
+            }
+        }
     }
 
     public void ReloadTutotial()

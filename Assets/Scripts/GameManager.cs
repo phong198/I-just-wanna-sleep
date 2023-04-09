@@ -106,6 +106,7 @@ public class GameManager : MonoBehaviour
             if (PlayerPrefs.GetString("day", "Monday") == "Saturday" || PlayerPrefs.GetString("day", "Monday") == "Sunday")
             {
                 MinusTime();
+                MinusTime();
             }
             else AddTime();
         }
@@ -253,8 +254,13 @@ public class GameManager : MonoBehaviour
             clockHour -= 1;
             if (clockHour < 0)
             {
-                clockHour = 0;
-                clockMinute = 0;
+                if ((PlayerPrefs.GetString("day", "Monday") != "Saturday" && PlayerPrefs.GetString("day", "Monday") != "Sunday"))
+                {
+                    clockHour = 0;
+                    clockMinute = 0;
+                }    
+                //clockHour = 0;
+                //clockMinute = 0;
             }
         }
     }
@@ -280,6 +286,11 @@ public class GameManager : MonoBehaviour
             timeText.SetText("Time: 0" + clockHour.ToString() + " : 0" + clockMinute.ToString());
         }
         else timeText.SetText("Time: 0" + clockHour.ToString() + " : " + clockMinute.ToString());
+
+        if (clockHour < 0)
+        {
+            timeText.SetText("Time: 00 : 00");
+        }
 
         scoreText.SetText("Score: " + score.ToString());
 

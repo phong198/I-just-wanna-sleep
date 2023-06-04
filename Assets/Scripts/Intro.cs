@@ -25,4 +25,9 @@ public class Intro : MonoBehaviour
     {
         SceneManager.LoadScene("Tutorial");
     }
+
+    public void SkipCredit()
+    {
+        SceneManager.LoadScene("Welcome");
+    }    
 }

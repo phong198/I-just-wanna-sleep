@@ -91,4 +91,9 @@ public class MainMenuManager : MonoBehaviour
             SceneManager.LoadScene("Gameplay");
         }
     }
+
+    public void BackToWelcome()
+    {
+        SceneManager.LoadScene("Welcome");
+    }    
 }
